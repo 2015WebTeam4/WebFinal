@@ -52,7 +52,7 @@ if ($_GET['q'] && $_GET['maxResults']) {
     foreach ($searchResponse['items'] as $searchResult) {
       switch ($searchResult['id']['kind']) {
         case 'youtube#video':
-        $videos .=  sprintf('<li>%s (%s)</li>',
+        $videos .=  sprintf('<li>%s <a href="showvideo.php?v=%s" >Click me</a></li>',
                             $searchResult['snippet']['title'], $searchResult['id']['videoId']);
         break;
       }
