@@ -1,5 +1,6 @@
 
 <?php
+	  header('Content-Type: text/html; charset=utf-8');
  include 'Info.php';
   $htmlBody = <<<END
 <form method="GET">
@@ -52,8 +53,8 @@ if ($_GET['q'] && $_GET['maxResults']) {
     foreach ($searchResponse['items'] as $searchResult) {
       switch ($searchResult['id']['kind']) {
         case 'youtube#video':
-        $videos .=  sprintf('<li>%s <a href="showvideo.php?v=%s" >Click me</a></li>',
-                            $searchResult['snippet']['title'], $searchResult['id']['videoId']);
+        $videos .=  sprintf('<li>%s <a href="showvideo.php?v=%s&title=%s" >Click me</a></li>',
+                            $searchResult['snippet']['title'], $searchResult['id']['videoId'], $searchResult['snippet']['title']);
         break;
       }
     }

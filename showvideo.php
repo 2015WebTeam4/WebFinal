@@ -20,7 +20,7 @@
       var player;
 	  
 <?php
-	  
+	  header('Content-Type: text/html; charset=utf-8');
 	  $vid = $_GET['v'];
       echo "function onYouTubeIframeAPIReady() {";
 	  echo "player = new YT.Player('player', {";
@@ -32,7 +32,9 @@
 	  echo "'onStateChange': onPlayerStateChange";
 	  echo "}";
       echo "  });";
-      echo "}";
+      echo "}\n";
+      
+
 ?>
 
       // 4. The API will call this function when the video player is ready.
@@ -54,8 +56,34 @@
       function stopVideo() {
         player.stopVideo();
       }
+	  
     </script>
 	
 	<div id="showCount"></div>
+	<div id="lyrics">
+	<?php
+	$title = $_GET['title'];
+	$result = file_get_contents("http://www.oiktv.com/search/lyrics/" . $title);
+	$pattern = '/http:\/\/www.oiktv.com\/lyrics\/lyric-\d*\.html/';
+	preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
+	
+	
+	foreach ($matches as $link)
+	{
+		echo "<a href='$link[0]'>link</a><br />";
+		
+
+	}
+		$result2 = file_get_contents($matches[0][0]);
+		$str = explode("<p", $result2);
+		$str = explode("p>", $str[1]);
+		echo "<br />$str[0]<br />";
+		
+		echo "<br/><br/><br/><br/><br/>";
+	?>
+	
+	
+	
+	</div>
 	</body>
 </html>
