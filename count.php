@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 
 	 $fp = fopen('count.txt', 'r');
@@ -9,4 +8,3 @@
 	  echo $count;
 	  fclose($fp);
 ?>
-</html>
