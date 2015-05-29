@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+  <head>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
@@ -17,6 +20,7 @@
       var player;
 	  
 <?php
+	  
 	  $vid = $_GET['v'];
       echo "function onYouTubeIframeAPIReady() {";
 	  echo "player = new YT.Player('player', {";
@@ -41,14 +45,17 @@
       //    the player should play for six seconds and then stop.
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.ENDED) {
-          location.reload(true);
+  //      location.reload(true);
+		  $("#showCount").load("count.php");
 		  // should be change to send request only
-		  //player.playVideo();
+		  player.playVideo();
         }
       }
       function stopVideo() {
         player.stopVideo();
       }
     </script>
-  </body>
+	
+	<div id="showCount"></div>
+	</body>
 </html>
