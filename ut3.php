@@ -1,5 +1,6 @@
 
 <?php
+ include 'Info.php';
   $htmlBody = <<<END
 <form method="GET">
   <div>
