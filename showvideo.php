@@ -65,7 +65,7 @@
 	$title = $_GET['title'];
 	
 	//TODO: replace some title tokens such as: official 
-	$find = array("official", "Official", "OFFICIAL", "官方");
+	$find = array("official", "Official", "OFFICIAL", "官方", "完整版", "MV", "/");
 	$title = str_replace($find, "", $title);
 
 	$result = file_get_contents("http://www.oiktv.com/search/lyrics/" . $title);
