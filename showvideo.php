@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -63,6 +63,11 @@
 	<div id="lyrics">
 	<?php
 	$title = $_GET['title'];
+	
+	//TODO: replace some title tokens such as: official 
+	$find = array("official", "Official", "OFFICIAL", "官方");
+	$title = str_replace($find, "", $title);
+
 	$result = file_get_contents("http://www.oiktv.com/search/lyrics/" . $title);
 	$pattern = '/http:\/\/www.oiktv.com\/lyrics\/lyric-\d*\.html/';
 	preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
@@ -77,6 +82,8 @@
 		$result2 = file_get_contents($matches[0][0]);
 		$str = explode("<p", $result2);
 		$str = explode("p>", $str[1]);
+		$str[0] = str_replace("~查詢更多歌詞 http://www.oiktv.com","", $str[0]);
+		$str[0] = str_replace("<a href=\"http://www.oiktv.com\">歌詞帝國</a>~","", $str[0]);
 		echo "<br />$str[0]<br />";
 		
 		echo "<br/><br/><br/><br/><br/>";
