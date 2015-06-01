@@ -2,12 +2,16 @@
 <html>
   <head>
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script>
+		
+		
+	</script>
   </head>
   <body>
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
-    <script>
+    <script type="text/javascript">
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -57,13 +61,26 @@
         player.stopVideo();
       }
 	  
+	
+	
+	function GetLyric(id)
+	{
+		$.get("http://localhost/getSongLyric.php", 
+		      {lyricId:id}, 
+			  function(data)
+			  {
+					$('#lyricArea').html(data);
+			  });
+		
+	}
+	  
     </script>
 	
 	<div id="showCount"></div>
 	<div id="lyrics">
 	<?php
 	$title = $_GET['title'];
-	
+// Search Song Here	
 	//TODO: replace some title tokens such as: official 
 	$find = array("official", "Official", "OFFICIAL", "官方", "完整版", "MV", "/");
 	$title = str_replace($find, "", $title);
@@ -75,22 +92,20 @@
 	
 	foreach ($matches as $link)
 	{
-		echo "<a href='$link[0]'>link</a><br />";
-		
-
-	}
-		$result2 = file_get_contents($matches[0][0]);
-		$str = explode("<p", $result2);
-		$str = explode("p>", $str[1]);
-		$str[0] = str_replace("~查詢更多歌詞 http://www.oiktv.com","", $str[0]);
-		$str[0] = str_replace("<a href=\"http://www.oiktv.com\">歌詞帝國</a>~","", $str[0]);
-		echo "<br />$str[0]<br />";
-		
+//		echo "<a href='$link[0]'>link</a>  ";
+		echo "<a href=\"javascript:GetLyric('$link[0]')\">Lyric</a>";	//use javascript to send request
+		echo "<br />";
+	}			
 		echo "<br/><br/><br/><br/><br/>";
 	?>
 	
 	
 	
 	</div>
+	<?php
+		echo "<br /><div id='lyricArea'>haha</div><br />";
+	
+	?>
+	
 	</body>
 </html>
