@@ -3,7 +3,7 @@
 header('Content-Type: text/html; charset=utf-8');
 /* Info.php contains $DEVELOPER_KEY */
 include 'Info.php';
-$htmlBody = <<<END
+$htmlBody = <<<EOT
 <form method="GET">
 <div>
 Title: <input class="input" type="search" id="q" name="q" placeholder="Enter title">
@@ -12,11 +12,11 @@ Title: <input class="input" type="search" id="q" name="q" placeholder="Enter tit
 Artist: <input class="input" type="search2" id="q2" name="q2" placeholder="Enter Artist">
 </div>
 <div>
-Max Results: <input class="input" type="number" id="maxResults" name="maxResults" min="1" max="25" step="1" value="10">
+Max Results: <input class="input" type="number" id="maxResults" name="maxResults" min="1" max="25" step="1" value="10" class="input">
 </div>
 <input class="btn" type="submit" value="Search">
 </form>
-END;
+EOT;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
 if ($_GET['q'] && $_GET['maxResults']) {
