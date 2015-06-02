@@ -65,7 +65,7 @@
 	
 	function GetLyric(id)
 	{
-		$.get("http://localhost/getSongLyric.php", 
+		$.get("getSongLyric.php", 
 		      {lyricId:id}, 
 			  function(data)
 			  {
@@ -103,7 +103,7 @@
 	
 	</div>
 	<?php
-		echo "<br /><div id='lyricArea'>haha</div><br />";
+		echo "<br /><div id='lyricArea'>Lyric is here</div><br />";
 	
 	?>
 	
