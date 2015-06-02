@@ -28,8 +28,8 @@ if ($_GET['q'] && $_GET['maxResults']) {
   require_once 'Google/Client.php';
   require_once 'Google/Service/YouTube.php';
     /* combine two criteria */
+    $lyr=$_GET['q'];
     $_GET['q']=$_GET['q'].' '.$_GET['q2'];
-
   /*
    * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
    * Google Developers Console <https://console.developers.google.com/>
@@ -59,7 +59,7 @@ if ($_GET['q'] && $_GET['maxResults']) {
       switch ($searchResult['id']['kind']) {
         case 'youtube#video':
         $videos .=  sprintf('<li>%s <a href="showvideo.php?v=%s&title=%s" >Click me</a></li>',
-                            $searchResult['snippet']['title'], $searchResult['id']['videoId'], $searchResult['snippet']['title']);
+                            $searchResult['snippet']['title'], $searchResult['id']['videoId'], $lyr);
         break;
       }
     }
