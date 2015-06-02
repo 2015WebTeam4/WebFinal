@@ -1,11 +1,16 @@
 
 <?php
+/* test 20150602 */
 	  header('Content-Type: text/html; charset=utf-8');
+   /* Info.php contains $DEVELOPER_KEY */
  include 'Info.php';
-  $htmlBody = <<<END
+   $htmlBody = <<<END
 <form method="GET">
   <div>
-    Search Term: <input type="search" id="q" name="q" placeholder="Enter Search Term">
+    Title: <input type="search" id="q" name="q" placeholder="Enter title">
+  </div>
+   <div>
+    Artist: <input type="search2" id="q2" name="q2" placeholder="Enter Artist">
   </div>
   <div>
     Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="25" step="1" value="10">
@@ -18,18 +23,18 @@ END;
 // and submitted the form. Otherwise, the page displays the form above.
 if ($_GET['q'] && $_GET['maxResults']) {
   // Call set_include_path() as needed to point to your client library.
-
   set_include_path($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src');
   require_once ($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src/Google/autoload.php');
   require_once 'Google/Client.php';
   require_once 'Google/Service/YouTube.php';
+    /* combine two criteria */
+    $_GET['q']=$_GET['q'].' '.$_GET['q2'];
 
   /*
    * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
    * Google Developers Console <https://console.developers.google.com/>
    * Please ensure that you have enabled the YouTube Data API for your project.
    */
-
   $client = new Google_Client();
   $client->setDeveloperKey($DEVELOPER_KEY);
 
@@ -38,7 +43,7 @@ if ($_GET['q'] && $_GET['maxResults']) {
 
   try {
     // Call the search.list method to retrieve results matching the specified
-    // query term.
+    // query term.    
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
       'q' => $_GET['q'],
       'maxResults' => $_GET['maxResults'],
