@@ -6,15 +6,15 @@ include 'Info.php';
 $htmlBody = <<<END
 <form method="GET">
 <div>
-Title: <input type="search" id="q" name="q" placeholder="Enter title">
+Title: <input class="input" type="search" id="q" name="q" placeholder="Enter title">
 </div>
 <div>
-Artist: <input type="search2" id="q2" name="q2" placeholder="Enter Artist">
+Artist: <input class="input" type="search2" id="q2" name="q2" placeholder="Enter Artist">
 </div>
 <div>
-Max Results: <input type="number" id="maxResults" name="maxResults" min="1" max="25" step="1" value="10">
+Max Results: <input class="input" type="number" id="maxResults" name="maxResults" min="1" max="25" step="1" value="10">
 </div>
-<input type="submit" value="Search">
+<input class="btn" type="submit" value="Search">
 </form>
 END;
 // This code will execute if the user entered a search query in the form
@@ -73,14 +73,15 @@ htmlspecialchars($e->getMessage()));
 <!doctype html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="myStyle.css">
 <title>YouTube Search</title>
 <script type='text/javascript'>
 		
 	<?php
-	$uid = 10;
+		$uid = $_SERVER['HTTP_X_FORWARDED_FOR'].time();
 		echo "if (!localStorage.getItem('userId'))";
 		echo "localStorage.setItem('userId', $uid);";
-		echo "else";
+		echo "else ";
 		echo "alert('UserId');";
 	?>
 	</script>
