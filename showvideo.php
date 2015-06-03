@@ -54,6 +54,7 @@
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
         event.target.playVideo();
+		getCount('N');
       }
 
       // 5. The API calls this function when the player's state changes.
@@ -62,9 +63,7 @@
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.ENDED) {
   //      location.reload(true);
-		  $("#showCount").load("count.php",
-		  {vid:player.getVideoData().video_id,
-		  uid:localStorage.getItem('userId')});
+		  getCount('Y');
 		  // should be change to send request only
 		  player.playVideo();
         }
@@ -73,7 +72,13 @@
         player.stopVideo();
       }
 	  
-	
+	function getCount(add)
+	{
+		$("#showCount").load("count.php",
+		  {vid:player.getVideoData().video_id,
+		  uid:localStorage.getItem('userId'),
+		  add:add});
+	}
 	
 	function GetLyric(id)
 	{
@@ -85,9 +90,12 @@
 			  });
 		
 	}
-	  
-    </script>
 	
+	document.ready = function() {
+		getCount('N');
+	};	  
+    </script>
+	<div id="Count">Times Played:</div>
 	<div id="showCount"></div>
 	<div id="lyrics">
 	<?php
