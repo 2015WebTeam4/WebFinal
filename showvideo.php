@@ -2,6 +2,9 @@
 <html>
   <head>
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 	<script>
 		
 		
@@ -23,7 +26,8 @@
       // 3. This function creates an <iframe> (and YouTube player)
       //    after the API code downloads.
       var player;
-	  
+	  var startTime;
+	  var endTime;
 <?php
 	  include("licence.php");
 	  header('Content-Type: text/html; charset=utf-8');
@@ -55,19 +59,57 @@
       // 4. The API will call this function when the video player is ready.
       function onPlayerReady(event) {
         event.target.playVideo();
+		setInterval("checkTime()", 100);
 		getCount('N');
+		
+		$(function() {
+    $("#slider").slider({
+      range: true,
+      min: 0,
+      max: player.getDuration(),
+      values: [ 0, 10 ],
+      slide: function( event, ui ) {
+			startTime = ui.values[ 0 ];
+			endTime = ui.values[ 1 ];
+			$("#startTime").html(Math.floor(startTime/60)+"."+startTime%60);
+			$("#endTime").html(Math.floor(endTime/60)+"."+endTime%60);
+	  }
+    });
+	startTime = $("#slider").slider( "values", 0 );
+	endTime = $("#slider").slider( "values", 1 );
+	$("#startTime").html(Math.floor(startTime/60)+"."+startTime%60);
+	$("#endTime").html(Math.floor(endTime/60)+"."+endTime%60);
+  });
       }
-
+	  function checkTime(){
+		//console.log(player.getCurrentTime());
+		var time = player.getCurrentTime();
+		if (time>endTime || time<startTime){
+//			player.pauseVideo();
+			
+			player.seekTo(startTime);
+			player.playVideo();
+			if (Math.abs(time-endTime) < 1 || Math.abs(time-startTime) < 1)
+				getCount('Y');
+		}
+		
+	  }
       // 5. The API calls this function when the player's state changes.
       //    The function indicates that when playing a video (state=1),
       //    the player should play for six seconds and then stop.
       function onPlayerStateChange(event) {
+		var time = player.getCurrentTime();
         if (event.data == YT.PlayerState.ENDED) {
-  //      location.reload(true);
 		  getCount('Y');
-		  // should be change to send request only
 		  player.playVideo();
         }
+		/*
+		else if (event.data == YT.PlayerState.PAUSED && (time >= endTime || time <= startTime)) {
+			getCount('Y');
+			player.seekTo(startTime);
+			player.playVideo();
+		}
+		*/
       }
       function stopVideo() {
         player.stopVideo();
@@ -95,9 +137,16 @@
 	document.ready = function() {
 		getCount('N');
 	};	  
+	
+	
+	
     </script>
 	<div id="Count">Times Played:</div>
 	<div id="showCount"></div>
+	StartTime:<div id="startTime"></div>
+	EndTime:<div id="endTime"></div>
+	<div id="slider"></div>
+	
 	<div id="lyrics">
 	<?php
 	$title = $_GET['title'];
