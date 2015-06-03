@@ -24,6 +24,7 @@
       var player;
 	  
 <?php
+	  include("licence.php");
 	  header('Content-Type: text/html; charset=utf-8');
 	  $vid = $_GET['v'];
       echo "function onYouTubeIframeAPIReady() {";
@@ -38,7 +39,16 @@
       echo "  });";
       echo "}\n";
       
-
+		// check database
+		$uid = $_GET['uid'];
+		$sql = "SELECT * FROM songinfo WHERE songid='$vid' AND userid='$uid'";
+        $result = mysql_query($sql);
+		if (mysql_num_rows($result) == 0)
+		{
+			//insert into database
+			$sql = "INSERT INTO songinfo VALUES ('$vid', '$uid', '0', 'N')";
+			$result = mysql_query($sql);
+		}
 ?>
 
       // 4. The API will call this function when the video player is ready.

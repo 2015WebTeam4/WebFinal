@@ -19,7 +19,7 @@ Max Results: <input class="input" type="number" id="maxResults" name="maxResults
 EOT;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
-if ($_GET['q'] && $_GET['maxResults']) {
+if (isset($_GET['q']) && $_GET['maxResults']) {
 // Call set_include_path() as needed to point to your client library.
 set_include_path($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src');
 require_once ($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src/Google/autoload.php');
@@ -52,8 +52,8 @@ $playlists = '';
 foreach ($searchResponse['items'] as $searchResult) {
 switch ($searchResult['id']['kind']) {
 case 'youtube#video':
-$videos .= sprintf('<li>%s <a href="showvideo.php?v=%s&title=%s" >Click me</a></li>',
-$searchResult['snippet']['title'], $searchResult['id']['videoId'], $lyr);
+$videos .= sprintf('<li>%s <a href="javascript:showvideo(%s, %s)" >Click me</a></li>',
+$searchResult['snippet']['title'], "'".$searchResult['id']['videoId']."'", "'".$lyr."'");
 break;
 }
 }
@@ -73,18 +73,21 @@ htmlspecialchars($e->getMessage()));
 <!doctype html>
 <html>
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="myStyle.css">
 <title>YouTube Search</title>
 <script type='text/javascript'>
-		
 	<?php
-		$uid = $_SERVER['HTTP_X_FORWARDED_FOR'].time();
+		$uid = getenv('HTTP_X_FORWARDED_FOR').time();
 		echo "if (!localStorage.getItem('userId'))";
-		echo "localStorage.setItem('userId', $uid);";
-		echo "else ";
-		echo "alert('UserId');";
+		echo " localStorage.setItem('userId', $uid);";
 	?>
-	</script>
+	function showvideo(v, title)
+	{
+		var uid = localStorage.getItem('userId');
+		window.location.assign("showvideo.php?v="+v+"&title="+title+"&uid="+uid);	
+	}
+</script>
 </head>
 <body>
 <?=$htmlBody?>
