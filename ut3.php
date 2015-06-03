@@ -19,7 +19,7 @@ Max Results: <input class="input" type="number" id="maxResults" name="maxResults
 EOT;
 // This code will execute if the user entered a search query in the form
 // and submitted the form. Otherwise, the page displays the form above.
-if (isset($_GET['q']) && $_GET['maxResults']) {
+if ($_GET['q'] && $_GET['maxResults']) {
 // Call set_include_path() as needed to point to your client library.
 set_include_path($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src');
 require_once ($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src/Google/autoload.php');
