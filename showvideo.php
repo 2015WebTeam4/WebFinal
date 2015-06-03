@@ -62,7 +62,9 @@
       function onPlayerStateChange(event) {
         if (event.data == YT.PlayerState.ENDED) {
   //      location.reload(true);
-		  $("#showCount").load("count.php");
+		  $("#showCount").load("count.php",
+		  {vid:player.getVideoData().video_id,
+		  uid:localStorage.getItem('userId')});
 		  // should be change to send request only
 		  player.playVideo();
         }
