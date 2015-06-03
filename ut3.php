@@ -26,7 +26,6 @@ require_once ($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src/Googl
 require_once 'Google/Client.php';
 require_once 'Google/Service/YouTube.php';
 /* combine two criteria */
-$lyr=$_GET['q'];
 $_GET['q']=$_GET['q'].' '.$_GET['q2'];
 /*
 * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
@@ -53,7 +52,7 @@ foreach ($searchResponse['items'] as $searchResult) {
 switch ($searchResult['id']['kind']) {
 case 'youtube#video':
 $videos .= sprintf('<li>%s <a href="javascript:showvideo(%s, %s)" >Click me</a></li>',
-$searchResult['snippet']['title'], "'".$searchResult['id']['videoId']."'", "'".$lyr."'");
+$searchResult['snippet']['title'], "'".$searchResult['id']['videoId']."'", "'".$_GET['q']."'");
 break;
 }
 }
@@ -68,6 +67,10 @@ htmlspecialchars($e->getMessage()));
 $htmlBody .= sprintf('<p>An client error occurred: <code>%s</code></p>',
 htmlspecialchars($e->getMessage()));
 }
+}
+else{
+	/* warn if no title */
+	echo '<script>alert("Please enter the title");</script>';
 }
 ?>
 <!doctype html>
