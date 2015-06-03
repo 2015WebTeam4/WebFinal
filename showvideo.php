@@ -8,6 +8,7 @@
 	</script>
   </head>
   <body>
+	 <a href="ut3.php">Back</a><br />
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
 
@@ -108,13 +109,6 @@
 	$result = file_get_contents("http://www.oiktv.com/search/lyrics/" . $title);
 	$pattern = '/http:\/\/www.oiktv.com\/lyrics\/lyric-\d*\.html/';
 	preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
-	
-	
-//	foreach ($matches as $link)
-//	{
-//		echo "<a href=\"javascript:GetLyric('$link[0]')\">Lyric</a>";	//use javascript to send request
-//		echo "<br />";
-//	}	
  
 	for ($i = 0; $i<5 ; $i++)
 	{
