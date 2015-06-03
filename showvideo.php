@@ -110,12 +110,18 @@
 	preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
 	
 	
-	foreach ($matches as $link)
+//	foreach ($matches as $link)
+//	{
+//		echo "<a href=\"javascript:GetLyric('$link[0]')\">Lyric</a>";	//use javascript to send request
+//		echo "<br />";
+//	}	
+ 
+	for ($i = 0; $i<5 ; $i++)
 	{
-//		echo "<a href='$link[0]'>link</a>  ";
+		$link = $matches[$i];
 		echo "<a href=\"javascript:GetLyric('$link[0]')\">Lyric</a>";	//use javascript to send request
 		echo "<br />";
-	}			
+	}	
 		echo "<br/><br/><br/><br/><br/>";
 	?>
 	
