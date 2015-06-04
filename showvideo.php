@@ -123,10 +123,12 @@
 		  add:add});
 	}
 	
-	function GetLyric(id)
+	function GetLyric(id, title, vid)
 	{
 		$.get("getSongLyric.php", 
-		      {lyricId:id}, 
+		      {lyricId:id,
+			  title:title,
+			  vid:vid}, 
 			  function(data)
 			  {
 					$('#lyricArea').html(data);
@@ -162,7 +164,7 @@
 	for ($i = 0; $i<5 ; $i++)
 	{
 		$link = $matches[$i];
-		echo "<a href=\"javascript:GetLyric('$link[0]')\">Lyric</a>";	//use javascript to send request
+		echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."')\">Lyric</a>";	//use javascript to send request
 		echo "<br />";
 	}	
 		echo "<br/><br/><br/><br/><br/>";
@@ -175,6 +177,33 @@
 		echo "<br /><div id='lyricArea'>Lyric is here</div><br />";
 	
 	?>
-	
+	<div id="playList">
+		PlayList:<br />
+<?php
+		$sql = "SELECT * FROM songinfo WHERE userid='$uid'";
+        $result = mysql_query($sql);
+		echo "<ul>";
+		while($row = mysql_fetch_array($result))
+		{
+			$sql2 = "SELECT * FROM lyrics WHERE songid='$row[songid]'";
+			$result2 = mysql_query($sql2);
+			if ($result2 && mysql_num_rows($result2) > 0)
+			{
+				$row2 = mysql_fetch_array($result2);
+				$title = htmlspecialchars($row2['title']);
+				echo "<li>";
+				echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid&title=$title\">$row2[title]</a>";
+				echo "</li>";
+			}
+			else
+			{
+				echo "<li>";
+				echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid\">$row[songid]</a>";
+				echo "</li>";
+			}
+		}
+		echo "</ul>";
+?>
+	</div>
 	</body>
 </html>
