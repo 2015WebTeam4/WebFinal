@@ -139,17 +139,29 @@
 	document.ready = function() {
 		getCount('N');
 	};	  
-	
-	
-	
+	function SectionHideshow(){
+		$("#playSection").toggle();
+	}
+	function LyricHideshow() {
+		$("#lyrics").toggle();
+	}
+	function ListHideshow() {
+		$("#playList").toggle();
+	}
     </script>
 	<div id="Count">Times Played:</div>
 	<div id="showCount"></div>
-	StartTime:<div id="startTime"></div>
-	EndTime:<div id="endTime"></div>
-	<div id="slider"></div>
-	
-	<div id="lyrics">
+	<div id="playSection" style="display:none;">
+		StartTime:<div id="startTime"></div>
+		EndTime:<div id="endTime"></div>
+		<div id="slider"></div>
+	</div>
+	<div id="buttons">
+		<input type="button" onclick="SectionHideshow()" value="playSection"></button>
+		<input type="button" onclick="LyricHideshow()" value="Lyric"></button>
+		<input type="button" onclick="ListHideshow()" value="PlayList"></button>
+	</div>
+	<div id="lyrics" style="display:none;">
 	<?php
 	$title = $_GET['title'];
 // Search Song Here	
@@ -170,14 +182,13 @@
 		echo "<br/><br/><br/><br/><br/>";
 	?>
 	
-	
+	<br /><div id='lyricArea'>Lyric is here</div><br />;
 	
 	</div>
-	<?php
-		echo "<br /><div id='lyricArea'>Lyric is here</div><br />";
 	
-	?>
-	<div id="playList">
+	
+	
+	<div id="playList" style="display:none;">
 		PlayList:<br />
 <?php
 		$sql = "SELECT * FROM songinfo WHERE userid='$uid'";
