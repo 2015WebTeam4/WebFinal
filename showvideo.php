@@ -67,7 +67,7 @@
       range: true,
       min: 0,
       max: player.getDuration(),
-      values: [ 0, 10 ],
+      values: [ 0, 1000 ],
       slide: function( event, ui ) {
 			startTime = ui.values[ 0 ];
 			endTime = ui.values[ 1 ];
