@@ -16,14 +16,14 @@ if (isset($_GET['lyricId']))
 	$result = mysql_query($sql);
 	if (mysql_num_rows($result) > 0)
 	{
-		$sql = "UPDATE lyrics SET content='OH' WHERE songid='".$_GET['vid']."'";
+		$sql = "UPDATE lyrics SET content='".$str[0]."' WHERE songid='".$_GET['vid']."'";
 		$result = mysql_query($sql);
 	}
 	else
 	{
 		$vid = $_GET['vid'];
 		$title = $_GET['title'];
-		$sql = "INSERT INTO lyrics VALUES ('$vid', '$title', 'hahaha')";
+		$sql = "INSERT INTO lyrics VALUES ('$vid', '$title', '".$str[0]."')";
 		$result = mysql_query($sql);
 	}
 }
