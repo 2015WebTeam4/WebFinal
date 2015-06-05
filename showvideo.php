@@ -1,154 +1,34 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-	<script>
-		
-		
-	</script>
   </head>
   <body>
 	 <a href="ut3.php">Back</a><br />
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
-
-    <script type="text/javascript">
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-	  var startTime;
-	  var endTime;
-<?php
+    <?php
 	  include("licence.php");
 	  header('Content-Type: text/html; charset=utf-8');
 	  $vid = $_GET['v'];
-      echo "function onYouTubeIframeAPIReady() {";
-	  echo "player = new YT.Player('player', {";
-	  echo "height: '390',";
-	  echo "width: '640',";
-	  echo "videoId: '$vid',";
-	  echo "events: {";
-	  echo "'onReady': onPlayerReady,";
-	  echo "'onStateChange': onPlayerStateChange";
-	  echo "}";
-      echo "  });";
-      echo "}\n";
+	  /* pass video id to javascript */
+      echo "<script>var vid = '".$vid."';</script>";
       
-		// check database
+		/* check database */
 		$uid = $_GET['uid'];
 		$sql = "SELECT * FROM songinfo WHERE songid='$vid' AND userid='$uid'";
         $result = mysql_query($sql);
 		if (mysql_num_rows($result) == 0)
 		{
-			//insert into database
+			/* insert into database */
 			$sql = "INSERT INTO songinfo VALUES ('$vid', '$uid', '0', 'N')";
 			$result = mysql_query($sql);
 		}
-?>
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-		setInterval("checkTime()", 100);
-		getCount('N');
-		
-		$(function() {
-    $("#slider").slider({
-      range: true,
-      min: 0,
-      max: player.getDuration(),
-      values: [ 0, 1000 ],
-      slide: function( event, ui ) {
-			startTime = ui.values[ 0 ];
-			endTime = ui.values[ 1 ];
-			$("#startTime").html(Math.floor(startTime/60)+"."+startTime%60);
-			$("#endTime").html(Math.floor(endTime/60)+"."+endTime%60);
-	  }
-    });
-	startTime = $("#slider").slider( "values", 0 );
-	endTime = $("#slider").slider( "values", 1 );
-	$("#startTime").html(Math.floor(startTime/60)+"."+startTime%60);
-	$("#endTime").html(Math.floor(endTime/60)+"."+endTime%60);
-  });
-      }
-	  function checkTime(){
-		//console.log(player.getCurrentTime());
-		var time = player.getCurrentTime();
-		if (time>endTime || time<startTime){
-//			player.pauseVideo();
-			
-			player.seekTo(startTime);
-			player.playVideo();
-			if (Math.abs(time-endTime) < 1 || Math.abs(time-startTime) < 1)
-				getCount('Y');
-		}
-		
-	  }
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      function onPlayerStateChange(event) {
-		var time = player.getCurrentTime();
-        if (event.data == YT.PlayerState.ENDED) {
-		  getCount('Y');
-		  player.playVideo();
-        }
-		/*
-		else if (event.data == YT.PlayerState.PAUSED && (time >= endTime || time <= startTime)) {
-			getCount('Y');
-			player.seekTo(startTime);
-			player.playVideo();
-		}
-		*/
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
-	  
-	function getCount(add)
-	{
-		$("#showCount").load("count.php",
-		  {vid:player.getVideoData().video_id,
-		  uid:localStorage.getItem('userId'),
-		  add:add});
-	}
-	
-	function GetLyric(id, title, vid)
-	{
-		$.get("getSongLyric.php", 
-		      {lyricId:id,
-			  title:title,
-			  vid:vid}, 
-			  function(data)
-			  {
-					$('#lyricArea').html(data);
-			  });
-		
-	}
-	
-	document.ready = function() {
-		getCount('N');
-	};	  
-	function SectionHideshow(){
-		$("#playSection").toggle();
-	}
-	function LyricHideshow() {
-		$("#lyrics").toggle();
-	}
-	function ListHideshow() {
-		$("#playList").toggle();
-	}
-    </script>
+	?>
+	<script src="showvideoj.js"></script>
 	<div id="Count">Times Played:</div>
 	<div id="showCount"></div>
 	<div id="playSection" style="display:none;">
