@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -44,6 +44,7 @@
 
 	
 	<div id="lyrics" style="display:none;">
+	<br /><div id='lyricArea'>hi</div><br />
 	<?php
 		$title = $_GET['title'];
 	// Search Song Here	
@@ -62,10 +63,8 @@
 			echo "<br />";
 		}	
 			/* show the first lyric */
-	 	echo "<script>GetLyric('".$matches[0][0]."','".$title."','".$_GET['v']."', 'F');</script>";
+	 	echo "<script>GetLyric('".$matches[0][0]." ',' ".$title." ','".$_GET['v']."', 'F');</script>";
 	?>
-	<br /><div id='lyricArea'>hi</div><br />
-	
 	</div>
 	
 	
