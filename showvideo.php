@@ -7,7 +7,11 @@
 
   </head>
   <body>
-	 <a href="ut3.php">Back</a><br />
+	 <a href="ut3.php">Back</a><div id="buttons">
+		<input type="button" onclick="SectionHideshow()" value="playSection"></button>
+		<input type="button" onclick="LyricHideshow()" value="Lyric"></button>
+		<input type="button" onclick="ListHideshow()" value="PlayList"></button>
+	</div><br />
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
     <?php
@@ -31,38 +35,36 @@
 	<script src="showvideoj.js"></script>
 	<div id="Count">Times Played:</div>
 	<div id="showCount"></div>
+	<br>
 	<div id="playSection" style="display:none;">
 		StartTime:<div id="startTime"></div>
 		EndTime:<div id="endTime"></div>
 		<div id="slider"></div>
 	</div>
-	<div id="buttons">
-		<input type="button" onclick="SectionHideshow()" value="playSection"></button>
-		<input type="button" onclick="LyricHideshow()" value="Lyric"></button>
-		<input type="button" onclick="ListHideshow()" value="PlayList"></button>
-	</div>
+
+	
 	<div id="lyrics" style="display:none;">
 	<?php
-	$title = $_GET['title'];
-// Search Song Here	
-	//TODO: replace some title tokens such as: official 
-	$find = array("official", "Official", "OFFICIAL", "官方", "完整版", "MV", "/");
-	$title = str_replace($find, "", $title);
+		$title = $_GET['title'];
+	// Search Song Here	
+		//TODO: replace some title tokens such as: official 
+		$find = array("official", "Official", "OFFICIAL", "官方", "完整版", "MV", "/");
+		$title = str_replace($find, "", $title);
 
-	$result = file_get_contents("http://www.oiktv.com/search/lyrics/" . $title);
-	$pattern = '/http:\/\/www.oiktv.com\/lyrics\/lyric-\d*\.html/';
-	preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
- 
-	for ($i = 0; $i<5 ; $i++)
-	{
-		$link = $matches[$i];
-		echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."')\">Lyric</a>";	//use javascript to send request
-		echo "<br />";
-	}	
-		echo "<br/><br/><br/><br/><br/>";
+		$result = file_get_contents("http://www.oiktv.com/search/lyrics/" . $title);
+		$pattern = '/http:\/\/www.oiktv.com\/lyrics\/lyric-\d*\.html/';
+		preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
+	 	
+		for ($i = 1; $i<5 ; $i++)
+		{
+			$link = $matches[$i];
+			echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."')\">Lyric</a>";	//use javascript to send request
+			echo "<br />";
+		}	
+			/* show the first lyric */
+	 	echo "<script>GetLyric('".$matches[0][0]." ',' ".$title." ',' ".$_GET['v']." ' );</script>";
 	?>
-	
-	<br /><div id='lyricArea'>Lyric is here</div><br />;
+	<br /><div id='lyricArea'>hi</div><br />
 	
 	</div>
 	
