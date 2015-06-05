@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
   	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -58,11 +58,11 @@
 		for ($i = 0; $i<5 ; $i++)
 		{
 			$link = $matches[$i];
-			echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."', 'T')\">Lyric</a>";	//use javascript to send request
+			echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."', 'T')\">Other lyric-$i</a>";	//use javascript to send request
 			echo "<br />";
 		}	
 			/* show the first lyric */
-	 	echo "<script>GetLyric('".$matches[0][0]." ',' ".$title." ',' ".$_GET['v']." ', 'F');</script>";
+	 	echo "<script>GetLyric('".$matches[0][0]."','".$title."','".$_GET['v']."', 'F');</script>";
 	?>
 	<br /><div id='lyricArea'>hi</div><br />
 	

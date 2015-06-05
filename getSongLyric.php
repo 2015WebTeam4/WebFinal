@@ -1,6 +1,6 @@
 ﻿<?php
 include("licence.php");
-if (isset($_GET['lyricId']) && isset($_GET['update']))
+if (isset($_GET['lyricId']) && isset($_GET['update']) && isset($_GET['vid']))
 {
 	header('Content-Type: text/html; charset=utf-8');
 	$update = $_GET['update'];
@@ -9,7 +9,7 @@ if (isset($_GET['lyricId']) && isset($_GET['update']))
 	$result = mysql_query($sql);
 	
 	//send request
-	if (mysql_num_rows($result) == 0 || $update == 'T')
+	if (mysql_num_rows($result) == 0 || "$update" === 'T')
 	{
 		$result = file_get_contents($_GET['lyricId']);
 		$str = explode("<p class=\"col-sm-12\" style=\"min-height: 250px;\">", $result);
