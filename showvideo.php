@@ -78,6 +78,10 @@
 		echo "<ul>";
 		while($row = mysql_fetch_array($result))
 		{
+			$sql2 = "SELECT * FROM lyrics WHERE songid='$row[songid]'";
+			$result2 = mysql_query($sql2);
+			$row2 = mysql_fetch_array($result2);
+			$title = htmlspecialchars($row2['title']);
 			echo "<li>";
 			echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid&title=$title\">$row[Utitle]</a>";
 			echo "</li>";
