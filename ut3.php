@@ -52,8 +52,8 @@ EOT;
 			foreach ($searchResponse['items'] as $searchResult) {
 				switch ($searchResult['id']['kind']) {
 					case 'youtube#video':
-					$videos .= sprintf('<li>%s <a href="javascript:showvideo(%s, %s)" >Click me</a></li>',
-						$searchResult['snippet']['title'], "'".$searchResult['id']['videoId']."'", "'".$_GET['q']."'");
+					$videos .= sprintf('<li>%s <a href="javascript:showvideo(%s, %s, %s)" >Click me</a></li>',
+						$searchResult['snippet']['title'], "'".$searchResult['id']['videoId']."'", "'".$_GET['q']."'", "'".$searchResult['snippet']['title']."'");
 					break;
 				}
 			}

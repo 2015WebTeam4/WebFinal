@@ -23,12 +23,13 @@
       
 		/* check database */
 		$uid = $_GET['uid'];
+		$utitle = $_GET['utitle'];
 		$sql = "SELECT * FROM songinfo WHERE songid='$vid' AND userid='$uid'";
         $result = mysql_query($sql);
 		if (mysql_num_rows($result) == 0)
 		{
 			/* insert into database */
-			$sql = "INSERT INTO songinfo VALUES ('$vid', '$uid', '0', 'N')";
+			$sql = "INSERT INTO songinfo VALUES ('$vid', '$uid', '0', 'N', '$utitle')";
 			$result = mysql_query($sql);
 		}
 	?>
@@ -77,22 +78,9 @@
 		echo "<ul>";
 		while($row = mysql_fetch_array($result))
 		{
-			$sql2 = "SELECT * FROM lyrics WHERE songid='$row[songid]'";
-			$result2 = mysql_query($sql2);
-			if ($result2 && mysql_num_rows($result2) > 0)
-			{
-				$row2 = mysql_fetch_array($result2);
-				$title = htmlspecialchars($row2['title']);
-				echo "<li>";
-				echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid&title=$title\">$row2[title]</a>";
-				echo "</li>";
-			}
-			else
-			{
-				echo "<li>";
-				echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid\">$row[songid]</a>";
-				echo "</li>";
-			}
+			echo "<li>";
+			echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid&title=$title\">$row[Utitle]</a>";
+			echo "</li>";
 		}
 		echo "</ul>";
 ?>
