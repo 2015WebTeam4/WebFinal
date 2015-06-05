@@ -55,14 +55,14 @@
 		$pattern = '/http:\/\/www.oiktv.com\/lyrics\/lyric-\d*\.html/';
 		preg_match_all($pattern, $result, $matches, PREG_SET_ORDER);
 	 	
-		for ($i = 1; $i<5 ; $i++)
+		for ($i = 0; $i<5 ; $i++)
 		{
 			$link = $matches[$i];
-			echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."')\">Lyric</a>";	//use javascript to send request
+			echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."', 'T')\">Lyric</a>";	//use javascript to send request
 			echo "<br />";
 		}	
 			/* show the first lyric */
-	 	echo "<script>GetLyric('".$matches[0][0]." ',' ".$title." ',' ".$_GET['v']." ' );</script>";
+	 	echo "<script>GetLyric('".$matches[0][0]." ',' ".$title." ',' ".$_GET['v']." ', 'F');</script>";
 	?>
 	<br /><div id='lyricArea'>hi</div><br />
 	

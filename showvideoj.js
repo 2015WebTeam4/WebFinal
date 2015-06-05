@@ -93,12 +93,13 @@ function getCount(add)
 			add:add});
 }
 
-function GetLyric(id, title, vid)
+function GetLyric(id, title, vid, update)
 {
 	$.get("getSongLyric.php", 
 		{lyricId:id,
 			title:title,
-			vid:vid}, 
+			vid:vid,
+			update: update}, 
 			function(data)
 			{
 				$('#lyricArea').html(data);
