@@ -110,12 +110,4 @@ function GetLyric(id, title, vid, update)
 document.ready = function() {
 	getCount('N');
 };	  
-function SectionHideshow(){
-	$("#playSection").toggle();
-}
-function LyricHideshow() {
-	$("#lyrics").toggle();
-}
-function ListHideshow() {
-	$("#playList").toggle();
-}
+
