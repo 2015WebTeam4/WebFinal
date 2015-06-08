@@ -11,7 +11,7 @@ after the API code downloads.*/
 var player;
 var startTime;
 var endTime;
-
+var Counten = true;
 function onYouTubeIframeAPIReady() {
 	player = new YT.Player('player', {
 		height: '390',
@@ -58,8 +58,11 @@ function checkTime(){
 
 		player.seekTo(startTime);
 		player.playVideo();
-		if (Math.abs(time-endTime) < 1 || Math.abs(time-startTime) < 1){
+		if ((Math.abs(time-endTime) < 1 || Math.abs(time-startTime) < 1) && true == Counten){
 			getCount('Y');
+			//Set time interval
+			Counten = false;
+			timer2 = setTimeout("Counten = true;", 1000);
 		}
 	}
 
