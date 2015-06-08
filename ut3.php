@@ -3,6 +3,7 @@
 	header('Content-Type: text/html; charset=utf-8');
 	/* Info.php contains $DEVELOPER_KEY */
 	include 'Info.php';
+	$uid = getenv('HTTP_X_FORWARDED_FOR').time();
 	$htmlBody = <<<EOT
 	<form method="GET">
 	<div>
@@ -18,7 +19,7 @@ EOT;
 	/* This code will execute if the user entered a search query in the form
 	and submitted the form. Otherwise, the page displays the form above. */
 
-	if($_GET["q"]&& isset($_GET["maxResults"])){
+	if($_GET["q"]){
 	/* Call set_include_path() as needed to point to your client library. */
 		set_include_path($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src');
 		require_once ($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src/Google/autoload.php');
@@ -47,7 +48,11 @@ EOT;
 			$playlists = '';
 		/*Add each result to the appropriate list, and then display the lists of
 		 matching videos, channels, and playlists.*/
-			foreach ($searchResponse['items'] as $searchResult) {
+		 if(preg_match('/\?v\=/',$_GET['q'])){
+		 	header('Location:showvideo.php?v='.$searchResponse['items'][0]['id']['videoId'].'&title='.'&uid='.$uid);
+		 }
+		 else{
+		 	foreach ($searchResponse['items'] as $searchResult) {
 				switch ($searchResult['id']['kind']) {
 					case 'youtube#video':
 					$videos .= sprintf('<li>%s <a href="javascript:showvideo(%s, %s, %s)" >Click me</a></li>',
@@ -59,6 +64,8 @@ EOT;
 			<h3>Videos</h3>
 			<ul>$videos</ul>
 END;
+		 }
+			
 		} catch (Google_Service_Exception $e) {
 			$htmlBody .= sprintf('<p>A service error occurred: <code>%s</code></p>',
 				htmlspecialchars($e->getMessage()));
@@ -76,7 +83,6 @@ END;
 <title>YouTube Search</title>
 <script type='text/javascript'>
 	<?php
-		$uid = getenv('HTTP_X_FORWARDED_FOR').time();
 		echo "if (!localStorage.getItem('userId'))";
 		echo " localStorage.setItem('userId', $uid);";
 	?>
