@@ -49,7 +49,7 @@ EOT;
 		/*Add each result to the appropriate list, and then display the lists of
 		 matching videos, channels, and playlists.*/
 		 if(preg_match('/\?v\=/',$_GET['q'])){
-		 	header('Location:showvideo.php?v='.$searchResponse['items'][0]['id']['videoId'].'&title='.'&uid='.$uid);
+		 	header('Location:showvideo.php?v='.$searchResponse['items'][0]['id']['videoId'].'&title='.htmlspecialchars($searchResponse['items'][0]['snippet']['title']).'&uid='.$uid.'&utitle='.$searchResponse['items'][0]['snippet']['title']);
 		 }
 		 else{
 		 	foreach ($searchResponse['items'] as $searchResult) {
