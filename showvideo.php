@@ -8,9 +8,6 @@
   </head>
   <body>
 	 <a href="ut3.php">Back</a><div id="buttons">
-		<input type="button" onclick="SectionHideshow()" value="playSection"></button>
-		<input type="button" onclick="LyricHideshow()" value="Lyric"></button>
-		<input type="button" onclick="ListHideshow()" value="PlayList"></button>
 	</div><br />
     <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
     <div id="player"></div>
@@ -37,14 +34,14 @@
 	<div id="Count">Times Played:</div>
 	<div id="showCount"></div>
 	<br>
-	<div id="playSection" style="display:none;">
+	<div id="playSection">
 		StartTime:<div id="startTime"></div>
 		EndTime:<div id="endTime"></div>
 		<div id="slider"></div>
 	</div>
 
 	
-	<div id="lyrics" style="display:none;">
+	<div id="lyrics">
 	<br /><div id='lyricArea'>hi</div><br />
 	<?php
 		$title = $_GET['title'];
@@ -70,7 +67,7 @@
 	
 	
 	
-	<div id="playList" style="display:none;">
+	<div id="playList">
 		PlayList:<br />
 <?php
 		$sql = "SELECT * FROM songinfo WHERE userid='$uid'";
