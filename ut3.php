@@ -11,9 +11,7 @@
 	<div>
 	Artist: <input class="input" type="search2" id="q2" name="q2" placeholder="Enter Artist">
 	</div>
-	<div>
-	Max Results: <input class="input" type="number" id="maxResults" name="maxResults" min="1" max="25" step="1" value="10" class="input">
-	</div>
+	
 	<input class="btn" type="submit" value="Search">
 	</form>
 EOT;
@@ -42,7 +40,7 @@ EOT;
 		query term.*/
 			$searchResponse = $youtube->search->listSearch('id,snippet', array(
 				'q' => $_GET['q'],
-				'maxResults' => $_GET['maxResults'],
+				'maxResults' => 10,
 				));
 			$videos = '';
 			$channels = '';
