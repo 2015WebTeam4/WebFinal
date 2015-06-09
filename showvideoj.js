@@ -109,5 +109,17 @@ function GetLyric(id, title, vid, update)
 
 document.ready = function() {
 	getCount('N');
-};	  
-
+};
+function addtof(uid, sid){
+	$.get("updateFavorite.php",{
+		userid:uid,
+		songid:sid
+		}, 
+		function(data){
+			$('#playList2').html(data);
+		});
+}
+function switchplaylist() {
+	$('#playList2').toggle();
+	$('#playList').toggle();
+}

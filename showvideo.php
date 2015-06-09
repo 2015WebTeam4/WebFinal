@@ -66,9 +66,12 @@
 	</div>
 	
 	<a href="mailto:assam1231@gmail.com?Subject=Lyric%20Error" target="_blank">Report lyrics</a>
+	<button id="SwitchPlaylist" onclick="javascript:switchplaylist()">
+Switch PlayList
+	</button>
 	
 	<div id="playList">
-		PlayList:<br />
+		Recently played:<br />
 <?php
 		$sql = "SELECT * FROM songinfo WHERE userid='$uid'";
         $result = mysqli_query($link, $sql);
@@ -86,5 +89,34 @@
 		echo "</ul>";
 ?>
 	</div>
+	<div id="playList2" style="display:none;">
+	<br />Favorite List:<br />
+<?php
+	$sql = "SELECT * FROM songinfo WHERE userid='$uid' AND addtof='Y'";
+	$result = mysqli_query($link, $sql);
+	echo "<ul>";
+		while($row = mysqli_fetch_array($result))
+		{
+			$sql2 = "SELECT * FROM lyrics WHERE songid='$row[songid]'";
+			$result2 = mysqli_query($link, $sql2);
+			$row2 = mysqli_fetch_array($result2);
+			$title = htmlspecialchars($row2['title']);
+			echo "<li>";
+			echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid&title=$title\">$row[Utitle]</a>";
+			echo "</li>";
+		}
+	echo "</ul>";
+	
+?>
+	</div>
+<?php
+	echo "<button id = \"favorite\" style = \"float: left; margin-right: 5px; display: block;\" onclick = \"javascript:addtof('$uid', '".$_GET['v']."')\">";
+	echo "		Add to/Remove from Favorite";
+	echo "</button>";
+	
+	
+?>
+
+
 	</body>
 </html>
