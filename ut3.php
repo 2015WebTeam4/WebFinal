@@ -53,7 +53,6 @@ EOT;
 		 	header('Location:showvideo.php?v='.$searchResponse['items'][0]['id']['videoId'].'&title='.htmlspecialchars($searchResponse['items'][0]['snippet']['title']).'&uid='.$uid.'&utitle='.$searchResponse['items'][0]['snippet']['title']);
 		 }
 		 else{
-			echo $_GET['q'];
 		 	foreach ($searchResponse['items'] as $searchResult) {
 				switch ($searchResult['id']['kind']) {
 					case 'youtube#video':
