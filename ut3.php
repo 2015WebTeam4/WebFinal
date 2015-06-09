@@ -30,6 +30,10 @@ EOT;
 		$_GET['q']=preg_replace($ptn,'',$_GET['q']);
 		$_GET['q']=preg_replace('/[\)\(]/','',$_GET['q']);
 		$_GET['q']=htmlspecialchars($_GET['q'], ENT_QUOTES);
+		$_GET['q2']=preg_replace($ptn,'',$_GET['q2']);
+		$_GET['q2']=preg_replace('/[\)\(]/','',$_GET['q2']);
+		$_GET['q2']=htmlspecialchars($_GET['q2'], ENT_QUOTES);
+		$_GET['q'] .=' '.$_GET['q2'];
 		/*
 		* Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
 		* Google Developers Console <https://console.developers.google.com/>
