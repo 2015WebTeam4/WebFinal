@@ -65,7 +65,7 @@
 	?>
 	</div>
 	
-	
+	<a href="mailto:assam1231@gmail.com?Subject=Lyric%20Error" target="_blank">Report lyrics</a>
 	
 	<div id="playList">
 		PlayList:<br />

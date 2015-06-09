@@ -17,6 +17,8 @@ if (isset($_GET['lyricId']) && isset($_GET['update']) && isset($_GET['vid']))
 		$str[0] = str_replace("~查詢更多歌詞 http://www.oiktv.com","", $str[0]);
 		$str[0] = str_replace("<a href=\"http://www.oiktv.com\">歌詞帝國</a>~","", $str[0]);
 		$str[0] = str_replace("\n","", $str[0]);
+		$str[0] = str_replace("~查询更多歌词 http://sg.oiktv.com","", $str[0]);
+		$str[0] = str_replace("<a href=\"http://sg.oiktv.com\">歌词帝国</a>~","", $str[0]);
 		
 		 
 		echo "<br /><div id='lyricArea'>$str[0]</div><br />";
