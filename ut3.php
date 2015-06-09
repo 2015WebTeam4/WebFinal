@@ -18,8 +18,7 @@
 EOT;
 	/* This code will execute if the user entered a search query in the form
 	and submitted the form. Otherwise, the page displays the form above. */
-	$ptn='/[&\|%<>;\'\"]/';
-		$_GET['q']=preg_replace($ptn,'',$_GET['q']);
+	
 	if($_GET["q"]){
 	/* Call set_include_path() as needed to point to your client library. */
 		set_include_path($_SERVER["DOCUMENT_ROOT"].'/google-api-php-client-master/src');
@@ -27,7 +26,10 @@ EOT;
 		require_once 'Google/Client.php';
 		require_once 'Google/Service/YouTube.php';
 		/* combine two criteria */
-		
+		$ptn='/[&\|%<>;\'\"\']/';
+		$_GET['q']=preg_replace($ptn,'',$_GET['q']);
+		$_GET['q']=preg_replace('/[\)\(]/','',$_GET['q']);
+		$_GET['q']=htmlspecialchars($_GET['q'], ENT_QUOTES);
 		/*
 		* Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
 		* Google Developers Console <https://console.developers.google.com/>
@@ -56,6 +58,7 @@ EOT;
 		 	foreach ($searchResponse['items'] as $searchResult) {
 				switch ($searchResult['id']['kind']) {
 					case 'youtube#video':
+					$searchResult['snippet']['title']=htmlspecialchars($searchResult['snippet']['title'], ENT_QUOTES);
 					$videos .= sprintf('<li>%s <a href="javascript:showvideo(%s, %s, %s)" >Click me</a></li>',
 						$searchResult['snippet']['title'], "'".$searchResult['id']['videoId']."'", "'".$_GET['q']."'", "'".$searchResult['snippet']['title']."'");
 					break;
