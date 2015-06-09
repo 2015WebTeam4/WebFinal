@@ -22,12 +22,12 @@
 		$uid = $_GET['uid'];
 		$utitle = $_GET['utitle'];
 		$sql = "SELECT * FROM songinfo WHERE songid='$vid' AND userid='$uid'";
-        $result = mysql_query($sql);
-		if (mysql_num_rows($result) == 0)
+        $result = mysqli_query($link, $sql);
+		if (mysqli_num_rows($result) == 0)
 		{
 			/* insert into database */
 			$sql = "INSERT INTO songinfo VALUES ('$vid', '$uid', '0', 'N', '$utitle')";
-			$result = mysql_query($sql);
+			$result = mysqli_query($link, $sql);
 		}
 	?>
 	<script src="showvideoj.js"></script>
@@ -56,8 +56,8 @@
 	 	
 		for ($i = 0; $i<5 ; $i++)
 		{
-			$link = $matches[$i];
-			echo "<a href=\"javascript:GetLyric('$link[0]', '$title', '".$_GET['v']."', 'T')\">Other lyric-$i</a>";	//use javascript to send request
+			$links = $matches[$i];
+			echo "<a href=\"javascript:GetLyric('$links[0]', '$title', '".$_GET['v']."', 'T')\">Other lyric-$i</a>";	//use javascript to send request
 			echo "<br />";
 		}	
 			/* show the first lyric */
@@ -71,13 +71,13 @@
 		PlayList:<br />
 <?php
 		$sql = "SELECT * FROM songinfo WHERE userid='$uid'";
-        $result = mysql_query($sql);
+        $result = mysqli_query($link, $sql);
 		echo "<ul>";
-		while($row = mysql_fetch_array($result))
+		while($row = mysqli_fetch_array($result))
 		{
 			$sql2 = "SELECT * FROM lyrics WHERE songid='$row[songid]'";
-			$result2 = mysql_query($sql2);
-			$row2 = mysql_fetch_array($result2);
+			$result2 = mysqli_query($link, $sql2);
+			$row2 = mysqli_fetch_array($result2);
 			$title = htmlspecialchars($row2['title']);
 			echo "<li>";
 			echo "<a href=\"showvideo.php?v=$row[songid]&uid=$uid&title=$title\">$row[Utitle]</a>";

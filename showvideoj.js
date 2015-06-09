@@ -46,9 +46,12 @@ function onPlayerReady(event) {
 		});
 		startTime = $("#slider").slider( "values", 0 );
 		endTime = $("#slider").slider( "values", 1 );
-		$("#startTime").html(Math.floor(startTime/60)+"."+startTime%60);
-		$("#endTime").html(Math.floor(endTime/60)+"."+endTime%60);
+		$("#startTime").html(pad(Math.floor(startTime/60))+":"+pad(startTime%60));
+		$("#endTime").html(pad(Math.floor(endTime/60))+":"+pad(endTime%60));
 	});
+}
+function pad(num){
+	return (num<10)? ('0' + num) : num;
 }
 function checkTime(){
 //console.log(player.getCurrentTime());
@@ -76,13 +79,6 @@ function onPlayerStateChange(event) {
 		getCount('Y');
 		player.playVideo();
 	}
-/*
-else if (event.data == YT.PlayerState.PAUSED && (time >= endTime || time <= startTime)) {
-getCount('Y');
-player.seekTo(startTime);
-player.playVideo();
-}
-*/
 }
 function stopVideo() {
 	player.stopVideo();
@@ -98,6 +94,7 @@ function getCount(add)
 
 function GetLyric(id, title, vid, update)
 {
+	$('#lyricArea').html('Loading...');
 	$.get("getSongLyric.php", 
 		{lyricId:id,
 			title:title,

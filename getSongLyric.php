@@ -6,10 +6,10 @@ if (isset($_GET['lyricId']) && isset($_GET['update']) && isset($_GET['vid']))
 	$update = $_GET['update'];
 	//check database first
 	$sql = "SELECT * FROM lyrics WHERE songid='".$_GET['vid']."';";
-	$result = mysql_query($sql);
+	$result = mysqli_query($link, $sql);
 	
 	//send request
-	if (mysql_num_rows($result) == 0 || "$update" === 'T')
+	if (mysqli_num_rows($result) == 0 || "$update" === 'T')
 	{
 		$result = file_get_contents($_GET['lyricId']);
 		$str = explode("<p class=\"col-sm-12\" style=\"min-height: 250px;\">", $result);
@@ -24,12 +24,12 @@ if (isset($_GET['lyricId']) && isset($_GET['update']) && isset($_GET['vid']))
 		//update database
 	
 		$sql = "SELECT * FROM lyrics WHERE songid='".$_GET['vid']."';";
-		$result = mysql_query($sql);
-		if (mysql_num_rows($result) > 0)
+		$result = mysqli_query($link, $sql);
+		if (mysqli_num_rows($result) > 0)
 		{
 			$str[0] = str_replace("'","&#039;", $str[0]);
 			$sql = "UPDATE lyrics SET content='".htmlspecialchars($str[0], ENT_QUOTES)."' WHERE songid='".$_GET['vid']."';";
-			$result = mysql_query($sql);
+			$result = mysqli_query($link, $sql);
 		}
 		else
 		{
@@ -37,12 +37,12 @@ if (isset($_GET['lyricId']) && isset($_GET['update']) && isset($_GET['vid']))
 			$title = $_GET['title'];
 			$str[0] = str_replace("'","&#039;", $str[0]);
 			$sql = "INSERT INTO lyrics VALUES ('$vid', '$title', '".htmlspecialchars($str[0], ENT_QUOTES)."');";
-			$result = mysql_query($sql);
+			$result = mysqli_query($link, $sql);
 		}
 	}
 	else
 	{
-		$row = mysql_fetch_array($result);
+		$row = mysqli_fetch_array($result);
 		echo "<br /><div id='lyricArea'>".htmlspecialchars_decode($row['content'])."</div><br />";
 	}
 }
